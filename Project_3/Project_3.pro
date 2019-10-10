@@ -31,3 +31,5 @@ LIBS += \
 
 HEADERS += \
     lib.h
+
+#Some random stuff
