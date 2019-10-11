@@ -3,6 +3,7 @@
 #include "lib.h"
 #include <random>
 #include <chrono>
+#include "time.h"
 
 using namespace std;
 using namespace arma;
@@ -48,7 +49,8 @@ int main()
 
 
     // starting clock for time keeping
-    high_resolution_clock::time_point t1 = high_resolution_clock::now();
+    time_t start, end;
+    start = clock();
 
 
 
@@ -77,10 +79,9 @@ int main()
     }
 
     // stops the clock
-    high_resolution_clock::time_point t2 = high_resolution_clock::now();
-    duration<double> time_span = duration_cast<duration<double> >(t2 - t1);
-    cout << endl << "Monte Carlo brute force used " << time_span.count() << " seconds" << endl;
-    cout << endl;
+    end = clock();
+    double runtime = double (end-start)/CLOCKS_PER_SEC;
+    cout << endl << "Monte Carlo brute force used " << runtime << " seconds" << endl << endl;
 
 
     // setting up the jaocbi

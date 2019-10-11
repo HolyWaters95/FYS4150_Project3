@@ -49,8 +49,9 @@ int main()
         double r2 = -0.25*log(1.-g);
 
         /*
-        cout << "r1 and r2 " << endl
-             << r1 << " " << r2 << endl;
+        // checks r1 and r2
+        cout << "r1 and r2 " << endl << r1 << " " << r2 << endl;
+
         */
 
         // defining theta and phi
@@ -85,7 +86,7 @@ int main()
 
     // stops the clock
     high_resolution_clock::time_point time2 = high_resolution_clock::now();
-    duration<double> time_span = duration_cast<duration<double> >(time2 - time1);
+    duration<double> time_span = duration_cast<duration<double> >(time2-time1);
     cout << endl << "Monte Carlo importance sampling used " << time_span.count()
          << " seconds" << endl;
 
