@@ -10,14 +10,7 @@ using namespace arma;
 double Gaussian_Legendre(double a, double b, int n, function<double(double)> f);
 vector<int> readvalues(string file);
 
-double int_function(double x1,double y1,double z1, double x2, double y2, double z2){
-    double r1 = sqrt(x1*x1 + y1*y1 + z1*z1);
-    double r2 = sqrt(x2*x2 + y2*y2 + z2*z2);
-    double r1_r2 = sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)+(z1-z2)*(z1-z2));
-    if (r1_r2 < pow(10,-10)){return 0;}
-    double I = exp(-4*(r1+r2))/r1_r2;
-    return I;
-}
+double int_function(double x1,double y1,double z1, double x2, double y2, double z2);
 
 double test(double x){
     return x*x;
@@ -72,14 +65,14 @@ int main(){
       string filenameresults = "Results_Legendre.txt";
       ofstream output;
       output.open("Results_Legendre.txt",ios::out);
-      output << "N = " << N << "   " << "a,b = " << a << " , " << b << "   " << "I = " << I << endl;
+      output << "a,b = " << a << " , " << b << "   " << "N = " << N << "   " << "I = " << I << endl;
       output.close();
   }
       else{
       string filenameresults = "Results_Legendre.txt";
       ofstream output;
       output.open("Results_Legendre.txt",ios::app);
-      output << "N = " << N << "   " << "a,b = " << a << " , " << b << "   " << "I = " << I << endl;
+      output << "a,b = " << a << " , " << b << "   " << "N = " << N << "   " << "I = " << I << endl;
       output.close();
 
       }

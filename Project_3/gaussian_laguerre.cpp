@@ -49,12 +49,6 @@ int main(){
   //Array for radial part
   gauss_laguerre(xr,wr,N,0);
 
-  //cout << *xr << endl;
-  //cout << *wr << endl;
-  //cout << *xt << endl;
-  //cout << *wt << endl;
-  //cout << *xp << endl;
-  //cout << *wp << endl;
   double I = 0;
   for (int i=0; i<N;i++){
       for (int j=0; j<N;j++){
