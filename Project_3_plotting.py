@@ -1,4 +1,4 @@
-from numpy import zeros, ones, array, sqrt, linspace, exp, meshgrid, pi
+from numpy import zeros, ones, array, sqrt, linspace, exp, meshgrid, pi, log10, polyfit, polyval
 import matplotlib.pyplot as plt
 from Py_Functions import readarrays
 
@@ -109,5 +109,14 @@ for l in range(L_counter):
 Leg_error.close()
 '''
 #Plot runtimes for Legendre
-Runtimes = readarrays("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/Gauss_Legendre_Runtimes.txt")[0][1]
+
+N, Runtimes = readarrays("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/Gauss_Legendre_Runtimes.txt")[0]
+
+N = array(N); Runtimes = array(Runtimes)
+lN = log10(N)
+lR = log10(Runtimes)
+
+
+
+
 
