@@ -33,6 +33,25 @@ vector<int> readvalues(string file){
     return N_values;
     }
 
+double int_function_spherical(double r1,double r2,double t1,double t2,double p1,double p2){
+    double A = r1*r1+r2*r2-2*r1*r2*(cos(t1)*cos(t2)+sin(t1)*sin(t2)*cos(p1-p2));
+    if (A > pow(10,-10)){
+    double I = r1*r1*r2*r2*sin(t1)*sin(t2)*exp(-3*(r1+r2))/sqrt(r1*r1+r2*r2-2*r1*r2*(cos(t1)*cos(t2)+sin(t1)*sin(t2)*cos(p1-p2)));
+    //cout << I << endl;
+    return I;}
+    else{return 0;}
+}
+
+double int_function(double x1,double y1,double z1, double x2, double y2, double z2){
+    double r1 = sqrt(x1*x1 + y1*y1 + z1*z1);
+    double r2 = sqrt(x2*x2 + y2*y2 + z2*z2);
+    double r1_r2 = sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)+(z1-z2)*(z1-z2));
+    if (r1_r2 < pow(10,-10)){return 0;}
+    double I = exp(-4*(r1+r2))/r1_r2;
+    return I;
+}
+
+
 
 //  Function to set up Gauss-Laguerre integration points and weights from
 //  the text Numerical Recipes of Teukolsky et al.

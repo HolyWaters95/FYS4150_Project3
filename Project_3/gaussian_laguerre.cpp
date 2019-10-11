@@ -6,39 +6,29 @@
 using namespace std;
 using namespace arma;
 
-double Gaussian_Legendre(double a, double b, int n, function<double(double)> f);
 vector<int> readvalues(string file);
+double int_function_spherical(double r1,double r2,double t1,double t2,double p1,double p2);
 
-double int_function(double x1,double y1,double z1, double x2, double y2, double z2){
-    double r1 = sqrt(x1*x1 + y1*y1 + z1*z1);
-    double r2 = sqrt(x2*x2 + y2*y2 + z2*z2);
-    double r1_r2 = sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)+(z1-z2)*(z1-z2));
-    if (r1_r2 < pow(10,-10)){return 0;}
-    double I = exp(-4*(r1+r2))/r1_r2;
-    return I;
-}
-
-double test(double x){
-    return x*x;
-}
+void gauss_laguerre(double *x, double *w, int n, double alf);
 
 int main(){
 
   string save_runtimes;
+  string save_results;
   cout << "do you want to save runtimes? y or n" << endl;
   cin >> save_runtimes;
+  cout << "do you want to save results? y or n" << endl;
+  cin >> save_results;
 
   vector<int> N_values = readvalues("Pro3_Nvalues.txt");
   vector<int> X_values = readvalues("Pro3_Xvalues.txt");
   vec runtimes(N_values.size());
 
 
-  for (int g = 0;g < X_values.size(); g+=2){
   for (int h = 0;h < N_values.size(); h++){
 
   int N = N_values[h];
-  double a = X_values[g];
-  double b = X_values[g+1];
+
 
   double *xr = new double[N];
   double *wr = new double[N];
@@ -51,7 +41,20 @@ int main(){
 
   time_t start, end;
   start = clock();
-  gauleg(a,b,x,w,N);
+
+  //Array for Theta
+  gauleg(0,M_PI,xt,wt,N);
+  //Array for Phi
+  gauleg(0,2*M_PI,xp,wp,N);
+  //Array for radial part
+  gauss_laguerre(xr,wr,N,0);
+
+  //cout << *xr << endl;
+  //cout << *wr << endl;
+  //cout << *xt << endl;
+  //cout << *wt << endl;
+  //cout << *xp << endl;
+  //cout << *wp << endl;
   double I = 0;
   for (int i=0; i<N;i++){
       for (int j=0; j<N;j++){
@@ -59,22 +62,40 @@ int main(){
               for (int l=0; l<N;l++){
                   for (int m=0; m<N;m++){
                       for (int n=0; n<N;n++){
-                          I += w[i]*w[j]*w[k]*w[l]*w[m]*w[n]*int_function(x[i],x[j],x[k],x[l],x[m],x[n]);
+                          I += wr[i]*wr[j]*wt[k]*wt[l]*wp[m]*wp[n]*int_function_spherical(xr[i],xr[j],xt[k],xt[l],xp[m],xp[n]);
   }}}}}}
   end = clock();
 
-  if (g==0){runtimes(h) = (double)(end-start)/CLOCKS_PER_SEC;}
+  runtimes(h) = (double)(end-start)/CLOCKS_PER_SEC;
 
   //double I = Gaussian_Legendre(a,b,n,test);
   cout << I << endl;
   cout << 5*M_PI*M_PI/(256) << endl;
 
+  if (save_results == "y"){
+      if(h == 0){
+      //string filenameresults = "Results_Laguerre.txt";
+      ofstream output;
+      output.open("Results_Laguerre.txt",ios::out);
+      output << "N = " << N << "   " << "I = " << I << endl;
+      output.close();
+  }
+      else{
+      //string filenameresults = "Results_Laguerre.txt";
+      ofstream output;
+      output.open("Results_Laguerre.txt",ios::app);
+      output << "N = " << N << "   " << "I = " << I << endl;
+      output.close();
+
+      }
+}
+
+
 
   } //End N loop
-  } //End X loop
 
   if (save_runtimes == "y"){
-  string filenameruntimes = "Gauss_Legendre_Runtimes.txt";
+  string filenameruntimes = "Gauss_Laguerre_Runtimes.txt";
   ofstream output;
   output.open(filenameruntimes,ios::out);
   for (int i = 0;i<N_values.size();i++){

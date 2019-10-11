@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "lib.h"
 #include <armadillo>
 #include "time.h"
@@ -25,8 +26,12 @@ double test(double x){
 int main(){
 
   string save_runtimes;
+  string save_results;
   cout << "do you want to save runtimes? y or n" << endl;
   cin >> save_runtimes;
+  cout << "do you want to save results? y or n" << endl;
+  cin >> save_results;
+
 
   vector<int> N_values = readvalues("Pro3_Nvalues.txt");
   vector<int> X_values = readvalues("Pro3_Xvalues.txt");
@@ -62,6 +67,23 @@ int main(){
   cout << I << endl;
   cout << 5*M_PI*M_PI/(256) << endl;
 
+  if (save_results == "y"){
+      if(g == 0 and h == 0){
+      string filenameresults = "Results_Legendre.txt";
+      ofstream output;
+      output.open("Results_Legendre.txt",ios::out);
+      output << "N = " << N << "   " << "a,b = " << a << " , " << b << "   " << "I = " << I << endl;
+      output.close();
+  }
+      else{
+      string filenameresults = "Results_Legendre.txt";
+      ofstream output;
+      output.open("Results_Legendre.txt",ios::app);
+      output << "N = " << N << "   " << "a,b = " << a << " , " << b << "   " << "I = " << I << endl;
+      output.close();
+
+      }
+}
 
   } //End N loop
   } //End X loop
