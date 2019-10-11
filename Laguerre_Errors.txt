@@ -1,0 +1,5 @@
+Results of Integral using Gaussian Laguerre 
+
+          |  Computed Value  |   Error   |      Runtime     |
+ N =  10  |      0.17708     |  0.01568  |      0.34400     |
+ N =  20  |      0.19479     |  0.00202  |     23.57800     |
