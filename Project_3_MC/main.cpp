@@ -15,10 +15,10 @@ double func_brute(double x1,double y1,double z1, double x2, double y2, double z2
 
 int main()
 {
-    // computes Monte Carlo with a uniform distribution without important sampling
+    // computes brute force Monte Carlo with a uniform distribution
 
     int n;
-    cout << "Input for number of Monte Carlo samples:" << endl;
+    cout << "Input number of brute force Monte Carlo samples:" << endl;
     cin >> n;
     double MCint = 0;
     double sum_sigma = 0;

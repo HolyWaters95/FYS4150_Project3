@@ -28,12 +28,10 @@ double func_brute(double x1, double y1,double z1, double x2, double y2, double z
 
 // function for the exponentional distribution importance sampling
 double func_important_samp(double r1, double r2, double t1, double t2, double p1, double p2){
-    //double alpha = 3.0;
     double dr1dr2 = r1*r1 * r2*r2 *sin(t1)*sin(t2);
     double beta = cos(t1)*cos(t2) + sin(t1)*sin(t2)*cos( p1 - p2 );
     double r12 = (sqrt(r1*r1 + r2*r2 - 2*r1*r2 * beta));
     if (r12 < pow(10,-10)){return 0;}
-    //double integrand = exp(-2*alpha*(r1+r2));
-    double I = dr1dr2  / r12;
+    double I = dr1dr2 / r12;
     return I;
 }

@@ -11,8 +11,7 @@ using namespace chrono;
 
 
 // delcaration of function
-double func_important_samp(double x1, double y1, double z1, double x2, double y2, double z2, double theta1, double theta2);
-double func_important_samp(double r1, double r2, double theta1, double theta2, double phi1, double phi2);
+double func_important_samp(double r1, double r2, double t1, double t2, double p1, double p2);
 
 
 
@@ -24,7 +23,7 @@ int main()
     // computes Monte Carlo with an exponential distribution without important sampling
 
     int n;
-    cout << "Input for number of Monte Carlo samples:" << endl;
+    cout << "Input N for Monte Carlo importance samples:" << endl;
     cin >> n;
     double MCintIS = 0;
     double sum_sigmaIS = 0;
@@ -39,7 +38,7 @@ int main()
     mt19937_64 generator (seed);
 
     // starting clock for time keeping
-    high_resolution_clock::time_point t1 = high_resolution_clock::now();
+    high_resolution_clock::time_point time1 = high_resolution_clock::now();
 
     for (int i = 1; i <= n; i++){
         // generating r1 and r2 with the exponential distribution
@@ -85,10 +84,10 @@ int main()
     }
 
     // stops the clock
-    high_resolution_clock::time_point t2 = high_resolution_clock::now();
-    duration<double> time_span = duration_cast<duration<double> >(t2 - t1);
-    cout << endl << "Monte Carlo importance sampling used " << time_span.count() << " seconds" << endl;
-    cout << endl;
+    high_resolution_clock::time_point time2 = high_resolution_clock::now();
+    duration<double> time_span = duration_cast<duration<double> >(time2 - time1);
+    cout << endl << "Monte Carlo importance sampling used " << time_span.count()
+         << " seconds" << endl;
 
 
     // setting up the jaocbi
