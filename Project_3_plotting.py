@@ -2,7 +2,8 @@ from numpy import zeros, ones, array, sqrt, linspace, exp, meshgrid, pi
 import matplotlib.pyplot as plt
 from Py_Functions import readarrays
 
-Exact = pi**2/256.
+Exact = (5*pi**2)/256.
+
 
 # Plotting integrand as function of r1 and r2
 '''
@@ -23,8 +24,8 @@ plt.show()
 '''
 
 #Tabulating results from Laguerre
-
 '''
+
 Values = open("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/Results_Laguerre.txt")
 
 lines = Values.readlines()
@@ -53,9 +54,9 @@ for i in range(len(N_values)):
 
 Lag_error.close()
 '''
+
 #Tabulating results from Legendre
-
-
+'''
 Values = open("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/Results_Legendre.txt")
 
 lines = Values.readlines()
@@ -65,33 +66,48 @@ Values.close()
 L_values = []
 N_values = []
 I_values = []
+Error_Legendre = []
 
-L_values.append(float(lines[0].split()[4])
-N_values.append(float(lines[0].split()[7])
-I_values.append(float(lines[0].split()[10])
+N_values.append([])
+I_values.append([])
+Error_Legendre.append([])
+L_counter = 1
+N_counter = 0
 
+L_values.append(float(lines[0].split()[4]))
 for i in range(1,len(lines)):
-	line_i = lines[i].split()	
-	L_values.append(float(line_i[4]))
-	N_values.append(float(line_i[7]))
-	I_values.append(float(line_i[10]))
+	if L_counter == 1:
+		N_counter += 1
+	if lines[i].split()[4] != lines[i-1].split()[4]:
+		N_values.append([])
+		I_values.append([])
+		Error_Legendre.append([])
 
-Runtimes = readarrays("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/Gauss_Legendre_Runtimes.txt")[0][1]
+		L_values.append(float(lines[i].split()[4]))
+		L_counter += 1
 
-N_values = array(N_values)
-I_values = array(I_values)
-Error_Legendre = abs(I_values-ones(len(I_values))*Exact)
+i = 0
+
+for l in range(L_counter):
+	for n in range(N_counter):
+		N_values[l].append(int(lines[i].split()[7]))
+		I_values[l].append(float(lines[i].split()[10]))
+		Error_Legendre[l].append(abs(float(lines[i].split()[10])-Exact))
+		i += 1
 
 Leg_error = open("Legendre_Errors.txt","w+")
 Leg_error.write("Results of Integral using Gaussian Legendre \n\n")
-Leg_error.write("          |  Computed Value  |   Error   |      Runtime     |\n")
-for l in L_values:
-	Leg_error.write(" L = %d  |" % l)
-	for i in range(len(N_values)):
-		Leg_error.write("        N = %3d  |     %8.5f     |  %7.5f  |\n" % (N_values[i], I_values[i],Error_Legendre[i]))
+Leg_error.write("                      |  Computed Value  |   Error   |\n")
+for l in range(L_counter):
+	Leg_error.write(" L = %d  |" % L_values[l])
+	for i in range(N_counter):
+		if i == 0:
+			Leg_error.write("   N = %3d   |     %8.5f     |  %7.5f  |\n" % (N_values[l][i], I_values[l][i],Error_Legendre[l][i]))		
+		else:		
+			Leg_error.write("        |   N = %3d   |     %8.5f     |  %7.5f  |\n" % (N_values[l][i], I_values[l][i],Error_Legendre[l][i]))
 
 Leg_error.close()
+'''
+#Plot runtimes for Legendre
+Runtimes = readarrays("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/Gauss_Legendre_Runtimes.txt")[0][1]
 
-
-
-#2, 4, 7, 10
