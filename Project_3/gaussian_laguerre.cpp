@@ -63,8 +63,12 @@ int main(){
   runtimes(h) = (double)(end-start)/CLOCKS_PER_SEC;
 
   //double I = Gaussian_Legendre(a,b,n,test);
-  cout << I << endl;
-  cout << 5*M_PI*M_PI/(256) << endl;
+  cout << "-----------------------------" << endl;
+  cout << "N = " << N << endl;
+  cout << "I = " << I << endl;
+  cout << "Runtime = " << (double)(end-start)/CLOCKS_PER_SEC << endl;
+  //cout << 5*M_PI*M_PI/(256) << endl;
+  cout << "-----------------------------" << endl;
 
   if (save_results == "y"){
       if(h == 0){

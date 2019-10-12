@@ -24,7 +24,7 @@ plt.show()
 '''
 
 #Tabulating results from Laguerre
-'''
+
 
 Values = open("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/Results_Laguerre.txt")
 
@@ -53,10 +53,10 @@ for i in range(len(N_values)):
 	Lag_error.write(" N = %3d  |     %8.5f     |  %7.5f  |   %10.5f     |\n" % (N_values[i], I_values[i],Error_Laguerre[i],Runtimes[i]))
 
 Lag_error.close()
-'''
+
 
 #Tabulating results from Legendre
-'''
+
 Values = open("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/Results_Legendre.txt")
 
 lines = Values.readlines()
@@ -107,7 +107,7 @@ for l in range(L_counter):
 			Leg_error.write("        |   N = %3d   |     %8.5f     |  %7.5f  |\n" % (N_values[l][i], I_values[l][i],Error_Legendre[l][i]))
 
 Leg_error.close()
-'''
+
 #Plot runtimes for Legendre
 
 N, Runtimes = readarrays("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/Gauss_Legendre_Runtimes.txt")[0]
