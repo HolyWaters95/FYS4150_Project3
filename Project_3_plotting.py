@@ -116,6 +116,45 @@ N = array(N); Runtimes = array(Runtimes)
 lN = log10(N)
 lR = log10(Runtimes)
 
+lininterpol = polyfit(lN,lR,1)
+
+print lininterpol[0],lininterpol[1]
+N_array = linspace(0,5,2000)
+linpolynomial = lininterpol[0]*N_array + lininterpol[1]
+
+plt.figure()
+plt.plot(lN,lR,"ro",N_array,linpolynomial,"b")
+plt.title("Runtimes for Gaussian Legendre as function \n of number of data points, N")
+plt.xlabel("$log_{10}(N)$")
+plt.ylabel("$log_{10}(t_R)$")
+plt.legend(["Calculated runtimes","%.2f$x$ + %.2f" % (lininterpol[0], lininterpol[1])])
+
+#Plotting runtimes for legendre and laguerre together
+
+plt.figure()
+plt.plot(lN,lR,"ro",N_array,linpolynomial,"b")
+
+
+N, Runtimes = readarrays("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/Gauss_Laguerre_Runtimes.txt")[0]
+
+N = array(N); Runtimes = array(Runtimes)
+lN = log10(N)
+lR = log10(Runtimes)
+
+lininterpol = polyfit(lN,lR,1)
+
+N_array = linspace(0,5,2000)
+linpolynomial = lininterpol[0]*N_array + lininterpol[1]
+
+plt.plot(lN,lR,"ro",N_array,linpolynomial,"b")
+plt.title("Runtimes for Gaussian Legendre as function \n of number of data points, N")
+plt.xlabel("$log_{10}(N)$")
+plt.ylabel("$log_{10}(t_R)$")
+plt.legend(["Calculated runtimes Legendre","Legendre polyfit: %.2f$x$ + %.2f" % (lininterpol[0], lininterpol[1]),"Calculated runtimes Laguerre","--"])
+
+
+
+plt.show()
 
 
 
