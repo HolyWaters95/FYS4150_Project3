@@ -57,8 +57,11 @@ int main(){
   if (g==0){runtimes(h) = (double)(end-start)/CLOCKS_PER_SEC;}
 
   //double I = Gaussian_Legendre(a,b,n,test);
-  cout << I << endl;
-  cout << 5*M_PI*M_PI/(256) << endl;
+  cout << "---------------------------------" << endl;
+  cout << "N = " << N << " | L = " << b << endl;
+  cout << "I= " << I << endl;
+  //cout << 5*M_PI*M_PI/(256) << endl;
+  cout << "Runtime = " << (double)(end-start)/CLOCKS_PER_SEC << endl;
 
   if (save_results == "y"){
       if(g == 0 and h == 0){
