@@ -13,21 +13,39 @@ using namespace chrono;
 // delcaration of function
 double func_brute(double x1,double y1,double z1, double x2, double y2, double z2 );
 
+vector<int> readvalues(string file);
 
 int main()
 {
     // computes brute force Monte Carlo with a uniform distribution
 
+    /*
     int n;
     cout << "Input number of brute force Monte Carlo samples:" << endl;
     cin >> n;
+    */
+
+    string save_runtimes;
+    string save_results;
+    cout << "do you want to save runtimes? y or n" << endl;
+    cin >> save_runtimes;
+    cout << "do you want to save results? y or n" << endl;
+    cin >> save_results;
+
+    vector<int> N_values = readvalues("Pro3_Nvalues.txt");
+    vector<int> X_values = readvalues("Pro3_Xvalues.txt");
+    vec runtimes(N_values.size());
+
+    double test_average = 0;
+
+for (int p = 0;p<N_values.size();p++){
+    int n = N_values[p];
+
     double MCint = 0;
     double sum_sigma = 0;
     double fx = 0;
     const double pi =3.141592653589793238463;
     double exact_solution = 5*pi*pi / (16*16);
-
-
 
     // random number generator
     unsigned seed = system_clock::now().time_since_epoch().count();
@@ -84,7 +102,7 @@ int main()
     cout << endl << "Monte Carlo brute force used " << runtime << " seconds" << endl << endl;
 
 
-    // setting up the jaocbi
+    // setting up the jacobi
     int a = -2;
     int b = 2;
     double jacobi = pow((b-a),6);
@@ -95,13 +113,15 @@ int main()
     double variance = sum_sigma - MCint*MCint;
 
 
-    cout << "Variance = " << variance << endl
+    cout << "Variance = " << jacobi*variance << endl
          << "Integral = " << jacobi * MCint << endl
          << "Exact = " << exact_solution << endl;
+    test_average += jacobi*MCint;
+} // end of N loop
 
 
+cout << "average = " << test_average/N_values.size() << endl;
 }
-
 // end of main
 
 
