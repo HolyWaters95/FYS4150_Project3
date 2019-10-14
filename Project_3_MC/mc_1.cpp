@@ -122,7 +122,7 @@ for (int p = 0;p<N_values.size();p++){
     double variance = sum_sigma - MCint*MCint;
 
     double I = jacobi*MCint;
-    double V = jacobi*jacobi*variance/(double(n));
+    double V = jacobi*variance; // *jacobi /(double(n));
     average_I += I;
     average_V += V;
     } //end of average loop
