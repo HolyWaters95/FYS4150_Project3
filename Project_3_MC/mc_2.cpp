@@ -22,6 +22,7 @@ int main()
 {
     // computes Monte Carlo with an exponential distribution without important sampling
 
+
     int n;
     cout << "Input N for Monte Carlo importance samples:" << endl;
     cin >> n;
