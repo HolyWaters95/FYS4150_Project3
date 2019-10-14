@@ -52,8 +52,8 @@ int main()
         /*
         // checks r1 and r2
         cout << "r1 and r2 " << endl << r1 << " " << r2 << endl;
-
         */
+
 
         // defining theta and phi
         // Initialize the seed and call the Mersienne algo
@@ -93,7 +93,7 @@ int main()
 
 
     // setting up the jaocbi
-    double jacobi = 4* pow(pi,4) / 16;
+    double jacobi = 4* pow(pi,4); // 16;
 
     // calculating the mean integration results and the variance
     MCintIS= MCintIS / (double (n));
