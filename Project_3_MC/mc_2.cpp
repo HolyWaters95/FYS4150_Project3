@@ -93,12 +93,13 @@ int main()
 
 
     // setting up the jaocbi
-    double jacobi = 4* pow(pi,4); // 16;
+    double jacobi = 4* pow(pi,4) / 16;
 
     // calculating the mean integration results and the variance
     MCintIS= MCintIS / (double (n));
     sum_sigmaIS = sum_sigmaIS / (double (n));
     double variance = sum_sigmaIS - MCintIS * MCintIS;
+
 
 
 
