@@ -36,16 +36,28 @@ int main()
     vector<int> X_values = readvalues("Pro3_Xvalues.txt");
     vec runtimes(N_values.size());
 
-    double test_average = 0;
+
 
 for (int p = 0;p<N_values.size();p++){
     int n = N_values[p];
+    double average_I = 0;
+    double average_V = 0;
+    double average_runtime = 0;
+
+    const double pi =3.141592653589793238463;
+    double exact_solution = 5*pi*pi / (16*16);
+
+    // setting up the jacobi
+    int a = -2;
+    int b = 2;
+    double jacobi = pow((b-a),6);
+
+    for (int counter = 0;counter < 10;counter++){
 
     double MCint = 0;
     double sum_sigma = 0;
     double fx = 0;
-    const double pi =3.141592653589793238463;
-    double exact_solution = 5*pi*pi / (16*16);
+
 
     // random number generator
     unsigned seed = system_clock::now().time_since_epoch().count();
@@ -99,28 +111,69 @@ for (int p = 0;p<N_values.size();p++){
     // stops the clock
     end = clock();
     double runtime = double (end-start)/CLOCKS_PER_SEC;
-    cout << endl << "Monte Carlo brute force used " << runtime << " seconds" << endl << endl;
+
+    average_runtime += runtime;
 
 
-    // setting up the jacobi
-    int a = -2;
-    int b = 2;
-    double jacobi = pow((b-a),6);
 
     // calculating the mean integration results and the variance
     MCint = MCint / (double (n));
     sum_sigma = sum_sigma / (double (n));
     double variance = sum_sigma - MCint*MCint;
 
+    double I = jacobi*MCint;
+    double V = jacobi*jacobi*variance/(double(n));
+    average_I += I;
+    average_V += V;
+    } //end of average loop
 
-    cout << "Variance = " << jacobi*variance << endl
-         << "Integral = " << jacobi * MCint << endl
-         << "Exact = " << exact_solution << endl;
-    test_average += jacobi*MCint;
+    average_I = average_I/(double(10));
+    average_V = average_V/(double(10));
+    average_runtime = average_runtime/(double(10));
+    runtimes(p) = average_runtime;
+
+    cout << endl << "Monte Carlo brute force used " << average_runtime << " seconds" << endl << endl;
+    cout << "Standard deviation = " << jacobi*sqrt(average_V/(double(n))) << endl
+         << "Variance = " << average_V << endl
+         << "Integral = " << average_I << endl
+         << "Exact = " << exact_solution << endl << "N = " << n << endl;
+
+
+    if (save_results == "y"){
+        if(p == 0){
+        ofstream output;
+        output.open("Results_BFMC.txt",ios::out);
+        output << "a,b = " << a << " , " << b << "   " << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
+        output.close();
+    }
+        else{
+        ofstream output;
+        output.open("Results_BFMC.txt",ios::app);
+        output << "a,b = " << a << " , " << b << "   " << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
+        output.close();
+
+        }
+  }
+
+
 } // end of N loop
 
 
-cout << "average = " << test_average/N_values.size() << endl;
+
+
+if (save_runtimes == "y"){
+string filenameruntimes = "BFMC_Runtimes.txt";
+ofstream output;
+output.open(filenameruntimes,ios::out);
+for (int i = 0;i<N_values.size();i++){
+    output << N_values[i] << endl;
+}
+output << endl;
+output << runtimes << endl;
+output.close();
+}
+else{}
+
 }
 // end of main
 

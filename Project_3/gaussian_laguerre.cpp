@@ -30,8 +30,8 @@ int main(){
   int N = N_values[h];
 
 
-  double *xr = new double[N];
-  double *wr = new double[N];
+  double *xr = new double[N+1];
+  double *wr = new double[N+1];
 
   double *xt = new double[N];
   double *wt = new double[N];
@@ -50,8 +50,8 @@ int main(){
   gauss_laguerre(xr,wr,N,0);
 
   double I = 0;
-  for (int i=0; i<N;i++){
-      for (int j=0; j<N;j++){
+  for (int i=1; i<N+1;i++){
+      for (int j=1; j<N+1;j++){
           for (int k=0; k<N;k++){
               for (int l=0; l<N;l++){
                   for (int m=0; m<N;m++){
@@ -74,14 +74,14 @@ int main(){
       if(h == 0){
       //string filenameresults = "Results_Laguerre.txt";
       ofstream output;
-      output.open("Results_Laguerre.txt",ios::out);
+      output.open("Results_Laguerre_test.txt",ios::out);
       output << "N = " << N << "   " << "I = " << I << endl;
       output.close();
   }
       else{
       //string filenameresults = "Results_Laguerre.txt";
       ofstream output;
-      output.open("Results_Laguerre.txt",ios::app);
+      output.open("Results_Laguerre_test.txt",ios::app);
       output << "N = " << N << "   " << "I = " << I << endl;
       output.close();
 
