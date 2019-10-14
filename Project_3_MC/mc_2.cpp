@@ -93,7 +93,7 @@ int main()
 
 
     // setting up the jaocbi
-    double jacobi = 4* pow(pi,4)/16;
+    double jacobi = 4* pow(pi,4)/16.0;
 
     // calculating the mean integration results and the variance
     MCintIS= MCintIS / (double (n));
