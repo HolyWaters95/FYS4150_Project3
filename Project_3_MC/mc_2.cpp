@@ -102,6 +102,7 @@ int main()
 
 
 
+
     // printing results for Important Samplng
     cout << endl << "Results for MC important sampling" << endl
          << "Variance = " << jacobi * variance << endl
