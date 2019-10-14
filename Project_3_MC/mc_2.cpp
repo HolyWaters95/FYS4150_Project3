@@ -22,6 +22,7 @@ int main()
 {
     // computes Monte Carlo with an exponential distribution without important sampling
 
+
     int n;
     cout << "Input N for Monte Carlo importance samples:" << endl;
     cin >> n;
@@ -103,7 +104,7 @@ int main()
 
     // printing results for Important Samplng
     cout << endl << "Results for MC important sampling" << endl
-         << "Variance = " << variance << endl
+         << "Variance = " << jacobi * variance << endl
          << "Integral = " << jacobi * MCintIS << endl
          << "Exact = " << exact_solution << endl;
 
