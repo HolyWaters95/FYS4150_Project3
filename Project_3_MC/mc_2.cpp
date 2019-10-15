@@ -20,7 +20,7 @@ double func_important_samp(double r1, double r2, double t1, double t2, double p1
 
 int main()
 {
-    // computes Monte Carlo with an exponential distribution without important sampling
+    // computes Monte Carlo with an exponential distribution important sampling
 
 
     int n;
@@ -49,11 +49,7 @@ int main()
         g = generate_canonical< double, 128 > (generator);
         double r2 = -0.25*log(1.-g);
 
-        /*
-        // checks r1 and r2
-        cout << "r1 and r2 " << endl << r1 << " " << r2 << endl;
-        */
-
+        cout << r1 << " " << r2 << endl;
 
         // defining theta and phi
         // Initialize the seed and call the Mersienne algo
@@ -70,14 +66,7 @@ int main()
         double p1 = double (zero_to_two_pi(gen));
         double p2 = double (zero_to_two_pi(gen));
 
-
-        /*
-        cout << endl << "printing theta and phi"  << endl;
-        cout << t1 << " " << t2 << endl
-             << p1 << " " << p2 << endl
-             << endl;
-        */
-
+        cout << t1 << " " << t2 << " "<< p1 << " " << p2 << endl;
 
         // MC integrating
         fy = func_important_samp(r1, r2, t1, t2, p1, p2);
