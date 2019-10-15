@@ -51,6 +51,7 @@ int main()
 
         cout << r1 << " " << r2 << endl;
 
+        /*
         // defining theta and phi
         // Initialize the seed and call the Mersienne algo
         random_device rd;
@@ -65,8 +66,23 @@ int main()
         double t2 = double (zero_to_pi(gen));
         double p1 = double (zero_to_two_pi(gen));
         double p2 = double (zero_to_two_pi(gen));
+        */
+        g = generate_canonical< double, 128 > (generator);
+        double t1 = g*pi;
+        g = generate_canonical< double, 128 > (generator);
+        double t2 = g*pi;
+        g = generate_canonical< double, 128 > (generator);
+        double p1 = g*2*pi;
+        g = generate_canonical< double, 128 > (generator);
+        double p2 = g*2*pi;
 
-        cout << t1 << " " << t2 << " "<< p1 << " " << p2 << endl;
+        /*
+        //cout << endl << "printing theta and phi"  << endl;
+        //cout << t1 << " " << t2 << endl
+             << p1 << " " << p2 << endl
+             << endl;
+        */
+
 
         // MC integrating
         fy = func_important_samp(r1, r2, t1, t2, p1, p2);
