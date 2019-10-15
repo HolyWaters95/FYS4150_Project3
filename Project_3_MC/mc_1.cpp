@@ -121,7 +121,7 @@ for (int p = 0;p<N_values.size();p++){
     // calculating the mean integration results and the variance
     MCint = MCint / (double (n));
     sum_sigma = sum_sigma / (double (n));
-    double variance = sum_sigma - MCint*MCint;
+    double variance = sum_sigma - MCint*MCint;      // ER VARIANCEN RIKTIG? Ikke dele på sqrt(16) ?
 
     double I = jacobi*MCint;
     double V = jacobi*variance; // *jacobi /(double(n));
