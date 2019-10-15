@@ -20,8 +20,6 @@ double func_important_samp(double r1, double r2, double t1, double t2, double p1
 
 int main()
 {
-    // computes Monte Carlo with an exponential distribution important sampling
-
 
     int n;
     cout << "Input N for Monte Carlo importance samples:" << endl;
@@ -49,24 +47,7 @@ int main()
         g = generate_canonical< double, 128 > (generator);
         double r2 = -0.25*log(1.-g);
 
-        cout << r1 << " " << r2 << endl;
-
-        /*
-        // defining theta and phi
-        // Initialize the seed and call the Mersienne algo
-        random_device rd;
-        mt19937_64 gen(rd());
-
-        // Set up the uniform distribution for x \in [[0, pi]
-        uniform_real_distribution<double> zero_to_pi(0.0,pi);
-        uniform_real_distribution<double> zero_to_two_pi(0.0,2*pi);
-
-        // Now use the RNG
-        double t1 = double (zero_to_pi(gen));
-        double t2 = double (zero_to_pi(gen));
-        double p1 = double (zero_to_two_pi(gen));
-        double p2 = double (zero_to_two_pi(gen));
-        */
+        // mapping random numbers [0,1] to theta [0,pi] and phi [0,2*pi]
         g = generate_canonical< double, 128 > (generator);
         double t1 = g*pi;
         g = generate_canonical< double, 128 > (generator);
@@ -75,13 +56,6 @@ int main()
         double p1 = g*2*pi;
         g = generate_canonical< double, 128 > (generator);
         double p2 = g*2*pi;
-
-        /*
-        //cout << endl << "printing theta and phi"  << endl;
-        //cout << t1 << " " << t2 << endl
-             << p1 << " " << p2 << endl
-             << endl;
-        */
 
 
         // MC integrating
@@ -101,7 +75,7 @@ int main()
     double jacobi = 4* pow(pi,4)/16.0;
 
     // calculating the mean integration results and the variance
-    MCintIS= MCintIS / (double (n));
+    MCintIS = MCintIS / (double (n));
     sum_sigmaIS = sum_sigmaIS / (double (n));
     double variance = sum_sigmaIS - MCintIS * MCintIS;
 
