@@ -19,9 +19,13 @@ if yn == "y":
 	X,Y = meshgrid(r1,r2)
 
 	I = integrand(X,Y) 
-
+	plt.figure()
+	plt.title("Plot of $ e^{-4(r_1+r_2)}$ as function of $r_1$ and $r_2$",y=1.02)
+	plt.xlabel("$r_1$")
+	plt.ylabel("$r_2$")
 	plt.contourf(X,Y,I)
 	plt.colorbar()
+	plt.savefig("integrand_plot.png")
 	plt.show()
 
 
