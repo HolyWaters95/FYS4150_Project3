@@ -206,9 +206,9 @@ if yn == "y":
 
 	for i in range(len(lines)):
 		line_i = lines[i].split()
-		N_values.append(float(line_i[7]))
-		I_values.append(float(line_i[10]))
-		V_values.append(float(line_i[13]))
+		N_values.append(float(line_i[2]))
+		I_values.append(float(line_i[5]))
+		V_values.append(float(line_i[8]))
 
 	print N_values
 	print I_values
