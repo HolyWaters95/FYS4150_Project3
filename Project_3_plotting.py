@@ -156,6 +156,27 @@ if yn == "y":
 	plt.savefig("Runtime plots Gaussian Quadrature.png")
 	plt.show()
 
+#Tabulating runtimes for Gaussian Quadrature
+
+yn = raw_input("Do you want to tabulate Gaussian runtimes? y/n \n")
+if yn == "y":
+	
+	runtime_table = open("Gaussian_runtimes.txt","w+")
+
+	legN, legRuntimes = readarrays("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/Gauss_Legendre_Runtimes.txt")[0]
+	
+	lagN, lagRuntimes = readarrays("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/Gauss_Laguerre_Runtimes.txt")[0]
+
+	runtime_table.write("  N | Legendre | Laguerre |\n")
+	runtime_table.write("    | Runtimes | Runtimes |\n")
+	runtime_table.write("    |          |          |\n")
+	for i in range(len(lagN)):
+		runtime_table.write(" %d |  %6.2f  |  %7.2f |\n" % (legN[i],legRuntimes[i],lagRuntimes[i])) 
+
+
+	runtime_table.close()
+
+
 #Tabulating results from Brute Force Monte Carlo
 
 yn = raw_input("Do you want to tabulate Brute Force Monte Carlo results? y/n \n")
