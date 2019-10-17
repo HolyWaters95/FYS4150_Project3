@@ -4,6 +4,7 @@
 #include "lib.h"
 #include <random>
 #include <chrono>
+#include <omp.h>
 
 using namespace std;
 using namespace arma;
@@ -20,6 +21,7 @@ vector<int> readvalues(string file);
 
 int main()
 {
+
 
     string save_runtimes;
     string save_results;
@@ -59,11 +61,15 @@ for (int p = 0; p<N_values.size();p++){
     // starting clock for time keeping
     high_resolution_clock::time_point time1 = high_resolution_clock::now();
 
+    //#pragma omp parallel for reduction(+:MCintIS) reduction(+:sum_sigmaIS)
+    #pragma omp parallel for shared(MCintIS, fy) reduction(+: MCintIS)
+    #pragma omp parallel for shared(sum_sigmaIS, fy) reduction(+: sum_sigmaIS)
+    {
     for (int i = 1; i <= n; i++){
         // generating r1 and r2 with the exponential distribution
         double g;
         g = generate_canonical< double, 128 > (generator);  // random number [0,1]
-        double r1 = -0.25*log(1.- g);                        // random number with exp dist
+        double r1 = -0.25*log(1.- g);                       // random number with exp dist
         g = generate_canonical< double, 128 > (generator);
         double r2 = -0.25*log(1.-g);
 
@@ -83,7 +89,7 @@ for (int p = 0; p<N_values.size();p++){
         MCintIS += fy;
         sum_sigmaIS += fy*fy;
     }
-
+    }
     // stops the clock
     high_resolution_clock::time_point time2 = high_resolution_clock::now();
     duration<double> time_span = duration_cast<duration<double> >(time2-time1);
