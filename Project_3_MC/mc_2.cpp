@@ -31,11 +31,6 @@ int main()
     vector<int> N_values = readvalues("Pro3_Nvalues.txt");
     vec runtimes(N_values.size());
 
-    /*
-    int n;
-    cout << "Input N for Monte Carlo importance samples:" << endl;
-    cin >> n;
-    */
 
 
     const double pi =3.141592653589793238463;
