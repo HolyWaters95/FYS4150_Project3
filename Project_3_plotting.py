@@ -19,9 +19,13 @@ if yn == "y":
 	X,Y = meshgrid(r1,r2)
 
 	I = integrand(X,Y) 
-
+	plt.figure()
+	plt.title("Plot of $ e^{-4(r_1+r_2)}$ as function of $r_1$ and $r_2$",y=1.02)
+	plt.xlabel("$r_1$")
+	plt.ylabel("$r_2$")
 	plt.contourf(X,Y,I)
 	plt.colorbar()
+	plt.savefig("integrand_plot.png")
 	plt.show()
 
 
@@ -151,6 +155,27 @@ if yn == "y":
 	plt.legend(Legends)
 	plt.savefig("Runtime plots Gaussian Quadrature.png")
 	plt.show()
+
+#Tabulating runtimes for Gaussian Quadrature
+
+yn = raw_input("Do you want to tabulate Gaussian runtimes? y/n \n")
+if yn == "y":
+	
+	runtime_table = open("Gaussian_runtimes.txt","w+")
+
+	legN, legRuntimes = readarrays("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/Gauss_Legendre_Runtimes.txt")[0]
+	
+	lagN, lagRuntimes = readarrays("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/Gauss_Laguerre_Runtimes.txt")[0]
+
+	runtime_table.write("  N | Legendre | Laguerre |\n")
+	runtime_table.write("    | Runtimes | Runtimes |\n")
+	runtime_table.write("    |          |          |\n")
+	for i in range(len(lagN)):
+		runtime_table.write(" %d |  %6.2f  |  %7.2f |\n" % (legN[i],legRuntimes[i],lagRuntimes[i])) 
+
+
+	runtime_table.close()
+
 
 #Tabulating results from Brute Force Monte Carlo
 
