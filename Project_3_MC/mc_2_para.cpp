@@ -4,19 +4,19 @@
 #include "lib.h"
 #include <random>
 #include <chrono>
-
+#include <omp.h>
 
 using namespace std;
 using namespace arma;
 using namespace chrono;
 
 
-// delcaration of function
+// delcaration of functions
 double func_importance_samp(double r1, double r2, double t1, double t2, double p1, double p2);
 vector<int> readvalues(string file);
 
 
-// Monte Carlo with exponential distribution important sampling
+// Monte Carlo with exponential distribution important sampling with parallelizing
 
 
 int main()
@@ -55,9 +55,22 @@ for (int p = 0; p<N_values.size();p++){
     // starting clock for time keeping
     high_resolution_clock::time_point time1 = high_resolution_clock::now();
 
+
+    // parallelizing 4 threads and making a seperate seed for each thread
+    double seed;
+    #pragma omp parallel num_threads(4) privat(seed)
+    {
+
+    // printing thread number for each thread
+    cout << "threads:" << omp_get_thread_num() << endl;
+
     // random number generator
     unsigned seed = system_clock::now().time_since_epoch().count();
     mt19937_64 generator (seed);
+
+    // parallelizing the sums
+    #pragma omp for reduction (+:MCintIS) reduction(+:sum_sigmaIS)
+
 
     for (int i = 1; i <= n; i++){
         // generating r1 and r2 with the exponential distribution
@@ -83,7 +96,7 @@ for (int p = 0; p<N_values.size();p++){
         MCintIS += fy;
         sum_sigmaIS += fy*fy;
     }
-
+    }
     // stops the clock
     high_resolution_clock::time_point time2 = high_resolution_clock::now();
     duration<double> time_span = duration_cast<duration<double> >(time2-time1);
