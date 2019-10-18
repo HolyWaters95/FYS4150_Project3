@@ -140,13 +140,13 @@ for (int p = 0;p<N_values.size();p++){
     if (save_results == "y"){
         if(p == 0){
         ofstream output;
-        output.open("Results_BFMC_L3_2.txt",ios::out);
+        output.open("Results_BFMC_3.txt",ios::out);
         output << "a,b = " << a << " , " << b << "   " << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
         output.close();
     }
         else{
         ofstream output;
-        output.open("Results_BFMC_L3_2.txt",ios::app);
+        output.open("Results_BFMC_3.txt",ios::app);
         output << "a,b = " << a << " , " << b << "   " << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
         output.close();
 
@@ -160,7 +160,7 @@ for (int p = 0;p<N_values.size();p++){
 
 
 if (save_runtimes == "y"){
-string filenameruntimes = "BFMC_Runtimes_2.txt";
+string filenameruntimes = "BFMC_Runtimes_3.txt";
 ofstream output;
 output.open(filenameruntimes,ios::out);
 for (int i = 0;i<N_values.size();i++){
