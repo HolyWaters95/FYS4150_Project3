@@ -16,7 +16,7 @@ double func_importance_samp(double r1, double r2, double t1, double t2, double p
 vector<int> readvalues(string file);
 
 //terminal compiler
-//g++-9 -o test -std=c++11 MC_Functions.cpp mc_2_para.cpp ../Project_3/p3_functions.cpp -L/usr/local/Cellar/armadillo/9.600.6/lib/ -I/usr/local/Cellar/armadillo/9.600.6/include/ -larmadillo -fopenmp
+//g++-9 -o exe -std=c++11 MC_Functions.cpp mc_2_para.cpp ../Project_3/p3_functions.cpp -L/usr/local/Cellar/armadillo/9.600.6/lib/ -I/usr/local/Cellar/armadillo/9.600.6/include/ -larmadillo -fopenmp
 
 
 
@@ -52,7 +52,7 @@ for (int p = 0; p<N_values.size();p++){
 
     for (int counter = 0; counter < 10; counter ++){
     double MCintIS = 0;
-    double sum_sigmaIS = 0;
+    //double sum_sigmaIS = 0;
     double fy = 0;
     double* f = new double[n];
 
@@ -61,8 +61,7 @@ for (int p = 0; p<N_values.size();p++){
 
 
     // parallelizing 4 threads and making a seperate seed for each thread
-    //double seed;
-    #pragma omp parallel num_threads(4) //privat(seed)
+    #pragma omp parallel num_threads(4)
     {
 
     // printing thread number for each thread
@@ -73,7 +72,7 @@ for (int p = 0; p<N_values.size();p++){
     mt19937_64 generator (seed);
 
     // parallelizing the sums
-    #pragma omp for reduction (+:MCintIS) reduction(+:sum_sigmaIS)
+    #pragma omp for reduction (+:MCintIS)
     for (int i = 1; i <= n; i++){
         //cout << "threads:" << omp_get_thread_num() << endl;
         // generating r1 and r2 with the exponential distribution
@@ -101,6 +100,7 @@ for (int p = 0; p<N_values.size();p++){
         //sum_sigmaIS += fy*fy;
     }
     }
+
     // stops the clock
     high_resolution_clock::time_point time2 = high_resolution_clock::now();
     duration<double> time_span = duration_cast<duration<double> >(time2-time1);
