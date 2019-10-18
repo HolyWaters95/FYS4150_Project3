@@ -85,7 +85,7 @@ for (int p = 0; p<N_values.size();p++){
         fy = func_importance_samp(r1, r2, t1, t2, p1, p2);
         f[i] = fy;
         MCintIS += fy;
-        sum_sigmaIS += fy*fy;
+        //sum_sigmaIS += fy*fy;
     }
 
     // stops the clock
@@ -135,13 +135,13 @@ for (int p = 0; p<N_values.size();p++){
     if (save_results == "y"){
         if(p == 0){
         ofstream output;
-        output.open("Results_ISMC.txt",ios::out);
+        output.open("Results_ISMC_2.txt",ios::out);
         output << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
         output.close();
     }
         else{
         ofstream output;
-        output.open("Results_ISMC.txt",ios::app);
+        output.open("Results_ISMC_2.txt",ios::app);
         output << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
         output.close();
 
@@ -153,7 +153,7 @@ for (int p = 0; p<N_values.size();p++){
 } //end of N loop
 
 if (save_runtimes == "y"){
-string filenameruntimes = "ISMC_Runtimes.txt";
+string filenameruntimes = "ISMC_Runtimes_2.txt";
 ofstream output;
 output.open(filenameruntimes,ios::out);
 for (int i = 0;i<N_values.size();i++){

@@ -98,7 +98,7 @@ for (int p = 0; p<N_values.size();p++){
         fy = func_importance_samp(r1, r2, t1, t2, p1, p2);
         f[i] = fy;
         MCintIS += fy;
-        sum_sigmaIS += fy*fy;
+        //sum_sigmaIS += fy*fy;
     }
     }
     // stops the clock
@@ -110,10 +110,10 @@ for (int p = 0; p<N_values.size();p++){
     // calculating the mean integration results and the variance
     MCintIS = MCintIS / (double (n));
     double var = 0;
-    for (int i = 1; i < n; i++){
-        var += 1/double (n) * (f[i] - MCintIS) * (f[i] - MCintIS);
+    for (int i = 1; i <= n; i++){
+        var +=  (f[i] - MCintIS) * (f[i] - MCintIS);
     }
-    var = var*jacobi;
+    var = var*jacobi / (double (n));
 
     // Standard deviation
     double sigma = 0;
@@ -148,13 +148,13 @@ for (int p = 0; p<N_values.size();p++){
     if (save_results == "y"){
         if(p == 0){
         ofstream output;
-        output.open("Results_ISMC.txt",ios::out);
+        output.open("Results_ISMC_para.txt",ios::out);
         output << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
         output.close();
     }
         else{
         ofstream output;
-        output.open("Results_ISMC.txt",ios::app);
+        output.open("Results_ISMC_para.txt",ios::app);
         output << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
         output.close();
 
@@ -166,7 +166,7 @@ for (int p = 0; p<N_values.size();p++){
 } //end of N loop
 
 if (save_runtimes == "y"){
-string filenameruntimes = "ISMC_Runtimes.txt";
+string filenameruntimes = "ISMC_Runtimes_para.txt";
 ofstream output;
 output.open(filenameruntimes,ios::out);
 for (int i = 0;i<N_values.size();i++){
