@@ -15,6 +15,10 @@ using namespace chrono;
 double func_importance_samp(double r1, double r2, double t1, double t2, double p1, double p2);
 vector<int> readvalues(string file);
 
+//terminal compiler
+//g++-9 -o exe -std=c++11 MC_Functions.cpp mc_2_para.cpp ../Project_3/p3_functions.cpp -L/usr/local/Cellar/armadillo/9.600.6/lib/ -I/usr/local/Cellar/armadillo/9.600.6/include/ -larmadillo -fopenmp
+
+
 
 // Monte Carlo with exponential distribution important sampling with parallelizing
 
@@ -48,31 +52,29 @@ for (int p = 0; p<N_values.size();p++){
 
     for (int counter = 0; counter < 10; counter ++){
     double MCintIS = 0;
-    double sum_sigmaIS = 0;
+    //double sum_sigmaIS = 0;
     double fy = 0;
-
+    double* f = new double[n];
 
     // starting clock for time keeping
     high_resolution_clock::time_point time1 = high_resolution_clock::now();
 
 
     // parallelizing 4 threads and making a seperate seed for each thread
-    double seed;
-    #pragma omp parallel num_threads(4) privat(seed)
+    #pragma omp parallel num_threads(4)
     {
 
     // printing thread number for each thread
-    cout << "threads:" << omp_get_thread_num() << endl;
+    //cout << "threads:" << omp_get_thread_num() << endl;
 
     // random number generator
     unsigned seed = system_clock::now().time_since_epoch().count();
     mt19937_64 generator (seed);
 
     // parallelizing the sums
-    #pragma omp for reduction (+:MCintIS) reduction(+:sum_sigmaIS)
-
-
+    #pragma omp for reduction (+:MCintIS)
     for (int i = 1; i <= n; i++){
+        //cout << "threads:" << omp_get_thread_num() << endl;
         // generating r1 and r2 with the exponential distribution
         double g;
         g = generate_canonical< double, 128 > (generator);  // random number [0,1]
@@ -93,10 +95,12 @@ for (int p = 0; p<N_values.size();p++){
 
         // MC integrating
         fy = func_importance_samp(r1, r2, t1, t2, p1, p2);
+        f[i] = fy;
         MCintIS += fy;
-        sum_sigmaIS += fy*fy;
+        //sum_sigmaIS += fy*fy;
     }
     }
+
     // stops the clock
     high_resolution_clock::time_point time2 = high_resolution_clock::now();
     duration<double> time_span = duration_cast<duration<double> >(time2-time1);
@@ -105,11 +109,24 @@ for (int p = 0; p<N_values.size();p++){
 
     // calculating the mean integration results and the variance
     MCintIS = MCintIS / (double (n));
-    sum_sigmaIS = sum_sigmaIS / (double (n));
-    double variance = sum_sigmaIS - MCintIS * MCintIS;
+    double var = 0;
+    for (int i = 1; i <= n; i++){
+        var +=  (f[i] - MCintIS) * (f[i] - MCintIS);
+    }
+    var = var*jacobi / (double (n));
 
+    // Standard deviation
+    double sigma = 0;
+    sigma = sqrt(var) / sqrt(n);
+
+
+    //sum_sigmaIS = sum_sigmaIS / (double (n));
+    //double variance = sum_sigmaIS - MCintIS * MCintIS;
+
+
+    //average_V += jacobi*variance;
     average_I += jacobi*MCintIS;
-    average_V += jacobi*variance;
+    average_V += var;
     average_runtime += runtime;
 
     } //end of average loop
@@ -120,7 +137,7 @@ for (int p = 0; p<N_values.size();p++){
     runtimes(p) = average_runtime;
     // printing results for Important Samplng
 
-    cout << endl << "Monte Carlo importance sampling used " << average_runtime
+    cout << endl << "Parallelized Monte Carlo importance sampling used " << average_runtime
          << " seconds" << endl;
 
     cout << endl << "Results for MC important sampling, N = " << n << endl
@@ -131,13 +148,13 @@ for (int p = 0; p<N_values.size();p++){
     if (save_results == "y"){
         if(p == 0){
         ofstream output;
-        output.open("Results_ISMC.txt",ios::out);
+        output.open("Results_ISMC_para.txt",ios::out);
         output << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
         output.close();
     }
         else{
         ofstream output;
-        output.open("Results_ISMC.txt",ios::app);
+        output.open("Results_ISMC_para.txt",ios::app);
         output << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
         output.close();
 
@@ -149,7 +166,7 @@ for (int p = 0; p<N_values.size();p++){
 } //end of N loop
 
 if (save_runtimes == "y"){
-string filenameruntimes = "ISMC_Runtimes.txt";
+string filenameruntimes = "ISMC_Runtimes_para.txt";
 ofstream output;
 output.open(filenameruntimes,ios::out);
 for (int i = 0;i<N_values.size();i++){

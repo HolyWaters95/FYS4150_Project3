@@ -50,6 +50,7 @@ for (int p = 0; p<N_values.size();p++){
     double MCintIS = 0;
     double sum_sigmaIS = 0;
     double fy = 0;
+    double* f = new double[n];
 
 
     // starting clock for time keeping
@@ -58,6 +59,8 @@ for (int p = 0; p<N_values.size();p++){
     // random number generator
     unsigned seed = system_clock::now().time_since_epoch().count();
     mt19937_64 generator (seed);
+
+
 
     for (int i = 1; i <= n; i++){
         // generating r1 and r2 with the exponential distribution
@@ -80,8 +83,9 @@ for (int p = 0; p<N_values.size();p++){
 
         // MC integrating
         fy = func_importance_samp(r1, r2, t1, t2, p1, p2);
+        f[i] = fy;
         MCintIS += fy;
-        sum_sigmaIS += fy*fy;
+        //sum_sigmaIS += fy*fy;
     }
 
     // stops the clock
@@ -92,11 +96,22 @@ for (int p = 0; p<N_values.size();p++){
 
     // calculating the mean integration results and the variance
     MCintIS = MCintIS / (double (n));
-    sum_sigmaIS = sum_sigmaIS / (double (n));
-    double variance = sum_sigmaIS - MCintIS * MCintIS;
+    double var = 0;
+    for (int i = 1; i < n; i++){
+        var += 1/double (n) * (f[i] - MCintIS) * (f[i] - MCintIS);
+    }
+    var = var*jacobi;
+    double sigma = 0;
+    sigma = sqrt(var) / sqrt(n);
 
+
+    //sum_sigmaIS = sum_sigmaIS / (double (n));
+    //double variance = sum_sigmaIS - MCintIS * MCintIS;
+
+
+    //average_V += jacobi*variance;
     average_I += jacobi*MCintIS;
-    average_V += jacobi*variance;
+    average_V += var;
     average_runtime += runtime;
 
     } //end of average loop
@@ -110,21 +125,23 @@ for (int p = 0; p<N_values.size();p++){
     cout << endl << "Monte Carlo importance sampling used " << average_runtime
          << " seconds" << endl;
 
-    cout << endl << "Results for MC important sampling, N = " << n << endl
+
+    cout << endl << "Standard deviation = " << sqrt(average_V/(double(n))) << endl
          << "Variance = " << average_V << endl
          << "Integral = " << average_I << endl
-         << "Exact = " << exact_solution << endl;
+         << "Exact = " << exact_solution << endl
+         <<  "N = " << n << endl;
 
     if (save_results == "y"){
         if(p == 0){
         ofstream output;
-        output.open("Results_ISMC.txt",ios::out);
+        output.open("Results_ISMC_2.txt",ios::out);
         output << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
         output.close();
     }
         else{
         ofstream output;
-        output.open("Results_ISMC.txt",ios::app);
+        output.open("Results_ISMC_2.txt",ios::app);
         output << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
         output.close();
 
@@ -136,7 +153,7 @@ for (int p = 0; p<N_values.size();p++){
 } //end of N loop
 
 if (save_runtimes == "y"){
-string filenameruntimes = "ISMC_Runtimes.txt";
+string filenameruntimes = "ISMC_Runtimes_2.txt";
 ofstream output;
 output.open(filenameruntimes,ios::out);
 for (int i = 0;i<N_values.size();i++){
