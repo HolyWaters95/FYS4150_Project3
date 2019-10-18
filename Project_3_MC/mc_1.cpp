@@ -48,8 +48,8 @@ for (int p = 0;p<N_values.size();p++){
     double exact_solution = 5*pi*pi / (16*16);
 
     // setting up the jacobi
-    int a = -2;
-    int b = 2;
+    int a = -3;
+    int b = 3;
     double jacobi = pow((b-a),6);
 
     for (int counter = 0;counter < 10;counter++){
@@ -90,17 +90,17 @@ for (int p = 0;p<N_values.size();p++){
         // generating random numbers between -2,2 for each coordinate
         double g;
         g = generate_canonical< double, 128 > (generator);
-        double x1 = double(g - 0.5)*4;
+        double x1 = double(g - 0.5)*6;
         g = generate_canonical< double, 128 > (generator);
-        double y1 = double(g - 0.5)*4;
+        double y1 = double(g - 0.5)*6;
         g = generate_canonical< double, 128 > (generator);
-        double z1 = double(g - 0.5)*4;
+        double z1 = double(g - 0.5)*6;
         g = generate_canonical< double, 128 > (generator);
-        double x2 = double(g - 0.5)*4;
+        double x2 = double(g - 0.5)*6;
         g = generate_canonical< double, 128 > (generator);
-        double y2 = double(g - 0.5)*4;
+        double y2 = double(g - 0.5)*6;
         g = generate_canonical< double, 128 > (generator);
-        double z2 = double(g - 0.5)*4;
+        double z2 = double(g - 0.5)*6;
 
 
 
@@ -144,13 +144,13 @@ for (int p = 0;p<N_values.size();p++){
     if (save_results == "y"){
         if(p == 0){
         ofstream output;
-        output.open("Results_BFMC.txt",ios::out);
+        output.open("Results_BFMC_L3.txt",ios::out);
         output << "a,b = " << a << " , " << b << "   " << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
         output.close();
     }
         else{
         ofstream output;
-        output.open("Results_BFMC.txt",ios::app);
+        output.open("Results_BFMC_L3.txt",ios::app);
         output << "a,b = " << a << " , " << b << "   " << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
         output.close();
 
