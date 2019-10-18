@@ -48,7 +48,7 @@ for (int p = 0; p<N_values.size();p++){
 
     for (int counter = 0; counter < 10; counter ++){
     double MCintIS = 0;
-    double sum_sigmaIS = 0;
+    //double sum_sigmaIS = 0;
     double fy = 0;
     double* f = new double[n];
 
