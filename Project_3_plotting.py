@@ -216,6 +216,35 @@ if yn == "y":
 
 	BFMC_error.close()
 	
+#Plotting Errors from Brute Force Monte Carlo
+
+yn = raw_input("Do you want to plot Brute Force Monte Carlo errors? y/n \n")
+if yn == "y":
+	Values = open("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/Results_BFMC.txt")
+
+	lines = Values.readlines()
+
+	Values.close()
+
+	N_values = []
+	I_values = []
+	V_values = []
+
+	for i in range(len(lines)):
+		line_i = lines[i].split()
+		N_values.append(float(line_i[7]))
+		I_values.append(float(line_i[10]))
+		V_values.append(float(line_i[13]))
+
+	N_values = array(N_values)	
+	I_values = array(I_values)
+	Error_BFMC = abs(I_values-ones(len(I_values))*Exact)
+	
+	plt.figure()
+	plt.plot(log10(N_values),log10(Error_BFMC),'b',log10(N_values),log10(Error_BFMC),'bo')
+	plt.show()
+
+
 #Tabulating results from Importance Sampling Monte Carlo
 
 yn = raw_input("Do you want to tabulate Importance Sampling Monte Carlo results? y/n \n")
@@ -253,6 +282,8 @@ if yn == "y":
 		ISMC_error.write(" N = %5.0e  |     %8.5f     |  %9.7f  | %.4e |   %10.5f     |\n" % (N_values[i], I_values[i],Error_ISMC[i],V_values[i], Runtimes[i]))
 
 	ISMC_error.close()
+
+
 
 
 

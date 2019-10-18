@@ -43,8 +43,8 @@ for (int p = 0;p<N_values.size();p++){
     double exact_solution = 5*pi*pi / (16*16);
 
     // setting up the jacobi
-    int a = -3;
-    int b = 3;
+    int a = -2;
+    int b = 2;
     double jacobi = pow((b-a),6);
 
     for (int counter = 0;counter < 10;counter++){
@@ -70,17 +70,17 @@ for (int p = 0;p<N_values.size();p++){
         // generating random numbers between -2,2 for each coordinate
         double g;
         g = generate_canonical< double, 128 > (generator);
-        double x1 = double(g - 0.5)*6;
+        double x1 = double(g - 0.5)*4;
         g = generate_canonical< double, 128 > (generator);
-        double y1 = double(g - 0.5)*6;
+        double y1 = double(g - 0.5)*4;
         g = generate_canonical< double, 128 > (generator);
-        double z1 = double(g - 0.5)*6;
+        double z1 = double(g - 0.5)*4;
         g = generate_canonical< double, 128 > (generator);
-        double x2 = double(g - 0.5)*6;
+        double x2 = double(g - 0.5)*4;
         g = generate_canonical< double, 128 > (generator);
-        double y2 = double(g - 0.5)*6;
+        double y2 = double(g - 0.5)*4;
         g = generate_canonical< double, 128 > (generator);
-        double z2 = double(g - 0.5)*6;
+        double z2 = double(g - 0.5)*4;
 
 
 
