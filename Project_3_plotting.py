@@ -131,11 +131,12 @@ if yn == "y":
 	plt.figure()
 	plt.title("Runtimes for Gaussian Legendre and Gaussian Laguerre \n as function of number of data points, N")
 	plt.xlabel("$log_{10}(N)$")
-	plt.ylabel("$log_{10}(t_R)$")
+	plt.ylabel("$log_{10}(t_R)$")	
 
-	for F in Runtime_Files:
+	Colours = ["b","g","ro","mo"]
+	for i in range(len(Runtime_Files)):
 	
-		N, Runtimes = readarrays("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/%s.txt" % F)[0]
+		N, Runtimes = readarrays("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/%s.txt" % Runtime_Files[i])[0]
 	
 		N = array(N); Runtimes = array(Runtimes)
 		lN = log10(N)
@@ -147,9 +148,9 @@ if yn == "y":
 		linpolynomial = lininterpol[0]*N_array + lininterpol[1]
 
 
-		plt.plot(lN,lR,"ro",N_array,linpolynomial,"b")
+		plt.plot(N_array,linpolynomial,"%s" % Colours[i],lN,lR,"%s" % Colours[i+2],)
 
-		Legends.append("%s, calculated" % F)
+		Legends.append("%s, calculated" % Runtime_Files[i])
 		Legends.append("%.2f$x$ + %.2f" % (lininterpol[0], lininterpol[1]))
 	
 	plt.legend(Legends)
