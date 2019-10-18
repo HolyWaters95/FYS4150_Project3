@@ -16,8 +16,8 @@ CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefau
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 DEFINES       = -DQT_QML_DEBUG
 CFLAGS        = -pipe -g $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.12 -Wall -W -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -stdlib=libc++ -openmp -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.12 -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I../Project_3_MC -I. -I/usr/local/Cellar/armadillo/9.600.6/include -I/usr/local/Cellar/libomp/9.0.0/include -I/Users/oyvindengebretsen/Qt2/5.13.0/clang_64/mkspecs/macx-clang
+CXXFLAGS      = -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.12 -Wall -W -fPIC $(DEFINES)
+INCPATH       = -I../Project_3_MC -I. -I/usr/local/Cellar/armadillo/9.600.6/include -I/Users/oyvindengebretsen/Qt2/5.13.0/clang_64/mkspecs/macx-clang
 QMAKE         = /Users/oyvindengebretsen/Qt2/5.13.0/clang_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -39,8 +39,8 @@ COMPRESS      = gzip -9f
 DISTNAME      = Project_3_MC1.0.0
 DISTDIR = /Users/oyvindengebretsen/Documents/UiO/Semester_5/CompPhys/Git/GitCompPhys/FYS4150_Project3/build-Project_3_MC-Desktop_Qt_5_13_0_clang_64bit-Debug/.tmp/Project_3_MC1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-LFLAGS        = -stdlib=libc++ -openmp -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.12 -Wl,-rpath,@executable_path/../Frameworks
-LIBS          = $(SUBLIBS) -L/usr/local/Cellar/armadillo/9.600.6/lib/ -larmadillo -L/usr/local/Cellar/libomp/9.0.0/lib   
+LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.12 -Wl,-rpath,@executable_path/../Frameworks
+LIBS          = $(SUBLIBS) -L/usr/local/Cellar/armadillo/9.600.6/lib/ -larmadillo   
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
 SED           = sed
@@ -55,11 +55,11 @@ OBJECTS_DIR   = ./
 SOURCES       = ../Project_3/p3_functions.cpp \
 		../Project_3_MC/MC_Functions.cpp \
 		../Project_3_MC/lib.cpp \
-		../Project_3_MC/mc_2.cpp 
+		../Project_3_MC/mc_1.cpp 
 OBJECTS       = p3_functions.o \
 		MC_Functions.o \
 		lib.o \
-		mc_2.o
+		mc_1.o
 DIST          = /Users/oyvindengebretsen/Qt2/5.13.0/clang_64/mkspecs/features/spec_pre.prf \
 		/Users/oyvindengebretsen/Qt2/5.13.0/clang_64/mkspecs/qdevice.pri \
 		/Users/oyvindengebretsen/Qt2/5.13.0/clang_64/mkspecs/features/device_config.prf \
@@ -229,7 +229,7 @@ DIST          = /Users/oyvindengebretsen/Qt2/5.13.0/clang_64/mkspecs/features/sp
 		../Project_3_MC/Project_3_MC.pro lib.h ../Project_3/p3_functions.cpp \
 		../Project_3_MC/MC_Functions.cpp \
 		../Project_3_MC/lib.cpp \
-		../Project_3_MC/mc_2.cpp
+		../Project_3_MC/mc_1.cpp
 QMAKE_TARGET  = Project_3_MC
 DESTDIR       = 
 TARGET        = Project_3_MC
@@ -641,7 +641,6 @@ p3_functions.o: ../Project_3/p3_functions.cpp /usr/local/Cellar/armadillo/9.600.
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/include_atlas.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/include_hdf5.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/include_superlu.hpp \
-		/usr/local/Cellar/libomp/9.0.0/include/omp.h \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/arma_forward.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/arma_static_check.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/typedef_elem.hpp \
@@ -1212,7 +1211,6 @@ MC_Functions.o: ../Project_3_MC/MC_Functions.cpp /usr/local/Cellar/armadillo/9.6
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/include_atlas.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/include_hdf5.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/include_superlu.hpp \
-		/usr/local/Cellar/libomp/9.0.0/include/omp.h \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/arma_forward.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/arma_static_check.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/typedef_elem.hpp \
@@ -1780,14 +1778,13 @@ MC_Functions.o: ../Project_3_MC/MC_Functions.cpp /usr/local/Cellar/armadillo/9.6
 lib.o: ../Project_3_MC/lib.cpp ../Project_3_MC/lib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lib.o ../Project_3_MC/lib.cpp
 
-mc_2.o: ../Project_3_MC/mc_2.cpp /usr/local/Cellar/armadillo/9.600.6/include/armadillo \
+mc_1.o: ../Project_3_MC/mc_1.cpp /usr/local/Cellar/armadillo/9.600.6/include/armadillo \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/compiler_extra.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/config.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/compiler_setup.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/include_atlas.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/include_hdf5.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/include_superlu.hpp \
-		/usr/local/Cellar/libomp/9.0.0/include/omp.h \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/arma_forward.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/arma_static_check.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/typedef_elem.hpp \
@@ -2350,7 +2347,7 @@ mc_2.o: ../Project_3_MC/mc_2.cpp /usr/local/Cellar/armadillo/9.600.6/include/arm
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/newarp_UpperHessenbergQR_meat.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/compiler_setup_post.hpp \
 		../Project_3_MC/lib.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mc_2.o ../Project_3_MC/mc_2.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mc_1.o ../Project_3_MC/mc_1.cpp
 
 ####### Install
 

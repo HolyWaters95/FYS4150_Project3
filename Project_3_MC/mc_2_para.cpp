@@ -15,6 +15,10 @@ using namespace chrono;
 double func_importance_samp(double r1, double r2, double t1, double t2, double p1, double p2);
 vector<int> readvalues(string file);
 
+//terminal compiler
+//g++-9 -o test -std=c++11 MC_Functions.cpp mc_2_para.cpp ../Project_3/p3_functions.cpp -L/usr/local/Cellar/armadillo/9.600.6/lib/ -I/usr/local/Cellar/armadillo/9.600.6/include/ -larmadillo -fopenmp
+
+
 
 // Monte Carlo with exponential distribution important sampling with parallelizing
 
@@ -50,19 +54,19 @@ for (int p = 0; p<N_values.size();p++){
     double MCintIS = 0;
     double sum_sigmaIS = 0;
     double fy = 0;
-
+    double* f = new double[n];
 
     // starting clock for time keeping
     high_resolution_clock::time_point time1 = high_resolution_clock::now();
 
 
     // parallelizing 4 threads and making a seperate seed for each thread
-    double seed;
-    #pragma omp parallel num_threads(4) privat(seed)
+    //double seed;
+    #pragma omp parallel num_threads(4) //privat(seed)
     {
 
     // printing thread number for each thread
-    cout << "threads:" << omp_get_thread_num() << endl;
+    //cout << "threads:" << omp_get_thread_num() << endl;
 
     // random number generator
     unsigned seed = system_clock::now().time_since_epoch().count();
@@ -70,9 +74,8 @@ for (int p = 0; p<N_values.size();p++){
 
     // parallelizing the sums
     #pragma omp for reduction (+:MCintIS) reduction(+:sum_sigmaIS)
-
-
     for (int i = 1; i <= n; i++){
+        //cout << "threads:" << omp_get_thread_num() << endl;
         // generating r1 and r2 with the exponential distribution
         double g;
         g = generate_canonical< double, 128 > (generator);  // random number [0,1]
@@ -93,6 +96,7 @@ for (int p = 0; p<N_values.size();p++){
 
         // MC integrating
         fy = func_importance_samp(r1, r2, t1, t2, p1, p2);
+        f[i] = fy;
         MCintIS += fy;
         sum_sigmaIS += fy*fy;
     }
@@ -105,11 +109,24 @@ for (int p = 0; p<N_values.size();p++){
 
     // calculating the mean integration results and the variance
     MCintIS = MCintIS / (double (n));
-    sum_sigmaIS = sum_sigmaIS / (double (n));
-    double variance = sum_sigmaIS - MCintIS * MCintIS;
+    double var = 0;
+    for (int i = 1; i < n; i++){
+        var += 1/double (n) * (f[i] - MCintIS) * (f[i] - MCintIS);
+    }
+    var = var*jacobi;
 
+    // Standard deviation
+    double sigma = 0;
+    sigma = sqrt(var) / sqrt(n);
+
+
+    //sum_sigmaIS = sum_sigmaIS / (double (n));
+    //double variance = sum_sigmaIS - MCintIS * MCintIS;
+
+
+    //average_V += jacobi*variance;
     average_I += jacobi*MCintIS;
-    average_V += jacobi*variance;
+    average_V += var;
     average_runtime += runtime;
 
     } //end of average loop
@@ -120,7 +137,7 @@ for (int p = 0; p<N_values.size();p++){
     runtimes(p) = average_runtime;
     // printing results for Important Samplng
 
-    cout << endl << "Monte Carlo importance sampling used " << average_runtime
+    cout << endl << "Parallelized Monte Carlo importance sampling used " << average_runtime
          << " seconds" << endl;
 
     cout << endl << "Results for MC important sampling, N = " << n << endl

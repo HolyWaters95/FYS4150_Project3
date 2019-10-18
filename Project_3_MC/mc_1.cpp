@@ -31,7 +31,7 @@ int main()
     vector<int> X_values = readvalues("Pro3_Xvalues.txt");
     vec runtimes(N_values.size());
 
-
+    cout << "n values size" << N_values.size() << endl;
 
 for (int p = 0;p<N_values.size();p++){
     int n = N_values[p];
@@ -52,6 +52,7 @@ for (int p = 0;p<N_values.size();p++){
     double MCint = 0;
     double sum_sigma = 0;
     double fx = 0;
+    double* f = new double[n];
 
 
     // random number generator
@@ -85,25 +86,40 @@ for (int p = 0;p<N_values.size();p++){
 
         // MC integrating
         fx = func_brute(x1,y1,z1,x2,y2,z2);
+        f[i] = fx;
         MCint += fx;
-        sum_sigma += fx*fx;
+        //sum_sigma += fx*fx;
     }
+
+
+
 
     // stops the clock
     end = clock();
     double runtime = double (end-start)/CLOCKS_PER_SEC;
+
 
     average_runtime += runtime;
 
 
 
     // calculating the mean integration results and the variance
+    double var = 0;
     MCint = MCint / (double (n));
-    sum_sigma = sum_sigma / (double (n));
-    double variance = sum_sigma - MCint*MCint;
+    for (int i = 1; i < n; i++){
+        var += 1/double (n) * (f[i] - MCint)*(f[i] - MCint);
+    }
+
+    var = var*jacobi;
+    double sigma = 0;
+    sigma = sqrt(var) / sqrt(n);
+
+    //sum_sigma = sum_sigma / (double (n));
+   // double variance = sum_sigma - MCint*MCint;
 
     double I = jacobi*MCint;
-    double V = jacobi*variance;
+    //double V = jacobi*variance;
+    double V = var;
     average_I += I;
     average_V += V;
 
@@ -115,7 +131,7 @@ for (int p = 0;p<N_values.size();p++){
     runtimes(p) = average_runtime;
 
     cout << endl << "Monte Carlo brute force used " << average_runtime << " seconds" << endl << endl;
-    cout << "Standard deviation = " << jacobi*sqrt(average_V/(double(n))) << endl
+    cout << "Standard deviation = " << sqrt(average_V/(double(n))) << endl
          << "Variance = " << average_V << endl
          << "Integral = " << average_I << endl
          << "Exact = " << exact_solution << endl << "N = " << n << endl;
