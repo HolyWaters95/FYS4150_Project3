@@ -19,11 +19,6 @@ int main()
 {
     // computes brute force Monte Carlo with a uniform distribution
 
-    /*
-    int n;
-    cout << "Input number of brute force Monte Carlo samples:" << endl;
-    cin >> n;
-    */
 
     string save_runtimes;
     string save_results;
@@ -59,25 +54,9 @@ for (int p = 0;p<N_values.size();p++){
     double fx = 0;
 
 
-
-
     // random number generator
     unsigned seed = system_clock::now().time_since_epoch().count();
     mt19937_64 generator (seed);
-
-
-
-    // random number test
-/*
-    for (int i = 0; i < n; i++){
-        double g;
-        g = generate_canonical< double, 128 > (generator);
-        cout << "rand numb 1 " << g << endl;
-        g = generate_canonical< double, 128 > (generator);
-        cout << "rand numb 2 " << g << endl;
-    }
-*/
-
 
 
     // starting clock for time keeping
@@ -121,12 +100,13 @@ for (int p = 0;p<N_values.size();p++){
     // calculating the mean integration results and the variance
     MCint = MCint / (double (n));
     sum_sigma = sum_sigma / (double (n));
-    double variance = sum_sigma - MCint*MCint;      // ER VARIANCEN RIKTIG? Ikke dele på sqrt(16) ?
+    double variance = sum_sigma - MCint*MCint;
 
     double I = jacobi*MCint;
-    double V = jacobi*variance; // *jacobi /(double(n));
+    double V = jacobi*variance;
     average_I += I;
     average_V += V;
+
     } //end of average loop
 
     average_I = average_I/(double(10));
