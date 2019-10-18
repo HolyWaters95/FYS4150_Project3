@@ -12,7 +12,6 @@ using namespace chrono;
 
 // delcaration of function
 double func_brute(double x1,double y1,double z1, double x2, double y2, double z2 );
-
 vector<int> readvalues(string file);
 
 int main()
@@ -50,7 +49,6 @@ for (int p = 0;p<N_values.size();p++){
     for (int counter = 0;counter < 10;counter++){
 
     double MCint = 0;
-    double sum_sigma = 0;
     double fx = 0;
     double* f = new double[n];
 
@@ -82,8 +80,6 @@ for (int p = 0;p<N_values.size();p++){
         g = generate_canonical< double, 128 > (generator);
         double z2 = double(g - 0.5)*4;
 
-
-
         // MC integrating
         fx = func_brute(x1,y1,z1,x2,y2,z2);
         f[i] = fx;
@@ -93,14 +89,10 @@ for (int p = 0;p<N_values.size();p++){
 
 
 
-
     // stops the clock
     end = clock();
     double runtime = double (end-start)/CLOCKS_PER_SEC;
-
-
     average_runtime += runtime;
-
 
 
     // calculating the mean integration results and the variance
@@ -115,7 +107,7 @@ for (int p = 0;p<N_values.size();p++){
     sigma = sqrt(var) / sqrt(n);
 
     //sum_sigma = sum_sigma / (double (n));
-   // double variance = sum_sigma - MCint*MCint;
+    // double variance = sum_sigma - MCint*MCint;
 
     double I = jacobi*MCint;
     //double V = jacobi*variance;
