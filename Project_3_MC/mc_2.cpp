@@ -135,13 +135,13 @@ for (int p = 0; p<N_values.size();p++){
     if (save_results == "y"){
         if(p == 0){
         ofstream output;
-        output.open("Results_ISMC_2.txt",ios::out);
+        output.open("Results_ISMC_non_para.txt",ios::out);
         output << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
         output.close();
     }
         else{
         ofstream output;
-        output.open("Results_ISMC_2.txt",ios::app);
+        output.open("Results_ISMC_non_para.txt",ios::app);
         output << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
         output.close();
 
@@ -153,7 +153,7 @@ for (int p = 0; p<N_values.size();p++){
 } //end of N loop
 
 if (save_runtimes == "y"){
-string filenameruntimes = "ISMC_Runtimes_2.txt";
+string filenameruntimes = "ISMC_Runtimes_non_para.txt";
 ofstream output;
 output.open(filenameruntimes,ios::out);
 for (int i = 0;i<N_values.size();i++){

@@ -55,11 +55,11 @@ OBJECTS_DIR   = ./
 SOURCES       = ../Project_3/p3_functions.cpp \
 		../Project_3_MC/MC_Functions.cpp \
 		../Project_3_MC/lib.cpp \
-		../Project_3_MC/mc_1.cpp 
+		../Project_3_MC/mc_2.cpp 
 OBJECTS       = p3_functions.o \
 		MC_Functions.o \
 		lib.o \
-		mc_1.o
+		mc_2.o
 DIST          = /Users/oyvindengebretsen/Qt2/5.13.0/clang_64/mkspecs/features/spec_pre.prf \
 		/Users/oyvindengebretsen/Qt2/5.13.0/clang_64/mkspecs/qdevice.pri \
 		/Users/oyvindengebretsen/Qt2/5.13.0/clang_64/mkspecs/features/device_config.prf \
@@ -229,7 +229,7 @@ DIST          = /Users/oyvindengebretsen/Qt2/5.13.0/clang_64/mkspecs/features/sp
 		../Project_3_MC/Project_3_MC.pro lib.h ../Project_3/p3_functions.cpp \
 		../Project_3_MC/MC_Functions.cpp \
 		../Project_3_MC/lib.cpp \
-		../Project_3_MC/mc_1.cpp
+		../Project_3_MC/mc_2.cpp
 QMAKE_TARGET  = Project_3_MC
 DESTDIR       = 
 TARGET        = Project_3_MC
@@ -1778,7 +1778,7 @@ MC_Functions.o: ../Project_3_MC/MC_Functions.cpp /usr/local/Cellar/armadillo/9.6
 lib.o: ../Project_3_MC/lib.cpp ../Project_3_MC/lib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lib.o ../Project_3_MC/lib.cpp
 
-mc_1.o: ../Project_3_MC/mc_1.cpp /usr/local/Cellar/armadillo/9.600.6/include/armadillo \
+mc_2.o: ../Project_3_MC/mc_2.cpp /usr/local/Cellar/armadillo/9.600.6/include/armadillo \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/compiler_extra.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/config.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/compiler_setup.hpp \
@@ -2347,7 +2347,7 @@ mc_1.o: ../Project_3_MC/mc_1.cpp /usr/local/Cellar/armadillo/9.600.6/include/arm
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/newarp_UpperHessenbergQR_meat.hpp \
 		/usr/local/Cellar/armadillo/9.600.6/include/armadillo_bits/compiler_setup_post.hpp \
 		../Project_3_MC/lib.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mc_1.o ../Project_3_MC/mc_1.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mc_2.o ../Project_3_MC/mc_2.cpp
 
 ####### Install
 
