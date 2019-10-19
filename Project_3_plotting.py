@@ -191,12 +191,14 @@ if yn == "y":
 	N_values = []
 	I_values = []
 	V_values = []
+	E_values = []
 
 	for i in range(len(lines)):
 		line_i = lines[i].split()
 		N_values.append(float(line_i[7]))
 		I_values.append(float(line_i[10]))
 		V_values.append(float(line_i[13]))
+		E_values.append(float(line_i[16]))
 
 	print N_values
 	print I_values
@@ -206,13 +208,12 @@ if yn == "y":
 
 	N_values = array(N_values)
 	I_values = array(I_values)
-	Error_BFMC = abs(I_values-ones(len(I_values))*Exact)
 
 	BFMC_error = open("BFMC_Errors.txt","w+")
 	BFMC_error.write("Results of Integral using Brute Force Monte Carlo \n\n")
-	BFMC_error.write("            |  Computed Value  |    Error    |  Variance  |      Runtime     |\n")
+	BFMC_error.write("            |  Computed Value  |  Average Error  |  Average Variance  |  Average Runtime  |\n")
 	for i in range(len(N_values)):
-		BFMC_error.write(" N = %5.0e  |     %8.5f     |  %9.7f  | %.4e |   %10.5f     |\n" % (N_values[i], I_values[i],Error_BFMC[i],V_values[i], Runtimes[i]))
+		BFMC_error.write(" N = %5.0e  |     %8.5f     |    %9.7f    |     %.4e     |     %10.5f    |\n" % (N_values[i], I_values[i],E_values[i],V_values[i], Runtimes[i]))
 
 	BFMC_error.close()
 	
@@ -258,12 +259,14 @@ if yn == "y":
 	N_values = []
 	I_values = []
 	V_values = []
+	E_values = []
 
 	for i in range(len(lines)):
 		line_i = lines[i].split()
 		N_values.append(float(line_i[2]))
 		I_values.append(float(line_i[5]))
 		V_values.append(float(line_i[8]))
+		E_values.append(float(line_i[11]))
 
 	print N_values
 	print I_values
@@ -273,13 +276,12 @@ if yn == "y":
 
 	N_values = array(N_values)
 	I_values = array(I_values)
-	Error_ISMC = abs(I_values-ones(len(I_values))*Exact)
 
 	ISMC_error = open("ISMC_Errors.txt","w+")
-	ISMC_error.write("Results of Integral using Brute Force Monte Carlo with importance sampling \n\n")
-	ISMC_error.write("            |  Computed Value  |    Error    |  Variance  |      Runtime     |\n")
+	ISMC_error.write("Results of Integral using Importance Sampling Monte Carlo \n\n")
+	ISMC_error.write("            |  Computed Value  |  Average Error  |  Average Variance  |  Average Runtime  |\n")
 	for i in range(len(N_values)):
-		ISMC_error.write(" N = %5.0e  |     %8.5f     |  %9.7f  | %.4e |   %10.5f     |\n" % (N_values[i], I_values[i],Error_ISMC[i],V_values[i], Runtimes[i]))
+		ISMC_error.write(" N = %5.0e  |     %8.5f     |    %9.7f    |     %.4e     |     %10.5f    |\n" % (N_values[i], I_values[i],E_values[i],V_values[i], Runtimes[i]))
 
 	ISMC_error.close()
 

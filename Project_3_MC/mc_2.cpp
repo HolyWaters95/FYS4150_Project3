@@ -39,8 +39,9 @@ for (int p = 0; p<N_values.size();p++){
 
     int n = N_values[p];
 
-    double average_I = 0;
+    double last_I = 0;
     double average_V = 0;
+    double average_error = 0;
     double average_runtime = 0;
 
     // setting up the jaocbi
@@ -110,15 +111,17 @@ for (int p = 0; p<N_values.size();p++){
 
 
     //average_V += jacobi*variance;
-    average_I += jacobi*MCintIS;
+    last_I = jacobi*MCintIS;
     average_V += var;
+    average_error += abs(last_I - exact_solution);
     average_runtime += runtime;
 
     } //end of average loop
 
-    average_I = average_I/10.0;
+    //average_I = average_I/10.0;
     average_V = average_V/10.0;
     average_runtime = average_runtime/10.0;
+    average_error = average_error/10.0;
     runtimes(p) = average_runtime;
     // printing results for Important Samplng
 
@@ -128,21 +131,22 @@ for (int p = 0; p<N_values.size();p++){
 
     cout << endl << "Standard deviation = " << sqrt(average_V/(double(n))) << endl
          << "Variance = " << average_V << endl
-         << "Integral = " << average_I << endl
+         << "Integral = " << last_I << endl
+         << "Error = " << average_error << endl
          << "Exact = " << exact_solution << endl
          <<  "N = " << n << endl;
 
     if (save_results == "y"){
         if(p == 0){
         ofstream output;
-        output.open("Results_ISMC_non_para.txt",ios::out);
-        output << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
+        output.open("Results_ISMC.txt",ios::out);
+        output << "N = " << n << "   " << "I = " << last_I << "   " << "V = " << average_V << "   " << "Error = " << average_error << endl;
         output.close();
     }
         else{
         ofstream output;
-        output.open("Results_ISMC_non_para.txt",ios::app);
-        output << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
+        output.open("Results_ISMC.txt",ios::app);
+        output << "N = " << n << "   " << "I = " << last_I << "   " << "V = " << average_V << "   " << "Error = " << average_error <<endl;
         output.close();
 
         }

@@ -34,8 +34,9 @@ int main()
 
 for (int p = 0;p<N_values.size();p++){
     int n = N_values[p];
-    double average_I = 0;
+    double last_I = 0;
     double average_V = 0;
+    double average_error = 0;
     double average_runtime = 0;
 
     const double pi =3.141592653589793238463;
@@ -112,34 +113,36 @@ for (int p = 0;p<N_values.size();p++){
     double I = jacobi*MCint;
     //double V = jacobi*variance;
     double V = var;
-    average_I += I;
+    last_I = I;
     average_V += V;
-
+    average_error += abs(I-exact_solution);
     } //end of average loop
 
-    average_I = average_I/(double(10));
+    //average_I = average_I/(double(10));
     average_V = average_V/(double(10));
+    average_error = average_error/10.0;
     average_runtime = average_runtime/(double(10));
     runtimes(p) = average_runtime;
 
     cout << endl << "Monte Carlo brute force used " << average_runtime << " seconds" << endl << endl;
     cout << "Standard deviation = " << sqrt(average_V/(double(n))) << endl
          << "Variance = " << average_V << endl
-         << "Integral = " << average_I << endl
+         << "Integral = " << last_I << endl
+         << "Error = " << average_error << endl
          << "Exact = " << exact_solution << endl << "N = " << n << endl;
 
 
     if (save_results == "y"){
         if(p == 0){
         ofstream output;
-        output.open("Results_BFMC_3.txt",ios::out);
-        output << "a,b = " << a << " , " << b << "   " << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
+        output.open("Results_BFMC.txt", ios::out);
+        output << "a,b = " << a << " , " << b << "   " << "N = " << n << "   " << "I = " << last_I << "   " << "V = " << average_V << "   " << "Error = " << average_error << endl;
         output.close();
     }
         else{
         ofstream output;
-        output.open("Results_BFMC_3.txt",ios::app);
-        output << "a,b = " << a << " , " << b << "   " << "N = " << n << "   " << "I = " << average_I << "   " << "V = " << average_V << endl;
+        output.open("Results_BFMC.txt",ios::app);
+        output << "a,b = " << a << " , " << b << "   " << "N = " << n << "   " << "I = " << last_I << "   " << "V = " << average_V << "   " << "Error = " << average_error << endl;
         output.close();
 
         }
