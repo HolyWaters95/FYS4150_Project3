@@ -286,7 +286,24 @@ if yn == "y":
 	ISMC_error.close()
 
 
+#Tabulating runtimes for Importance Sampling Monte Carlo
+
+yn = raw_input("Do you want to tabulate Importance Sampling Monte Carlo runtimes? y/n \n")
+if yn == "y":
+
+	runtime_table = open("ISMC_Runtimes.txt","w+")
+
+	npN, npRuntimes = readarrays("build-Project_3-Desktop_Qt_5_13_0_MinGW_64_bit-Debug/ISMC_Runtimes.txt")[0]
+	
+	pN, pRuntimes = readarrays("Project_3_MC/ISMC_Runtimes_para.txt")[0]
+
+	runtime_table.write("     N     | No parallelization | Parallelization | pR / npR |\n")
+	runtime_table.write("           |   Runtimes, npR    |  Runtimes, pR   |          |\n")
+	runtime_table.write("           |                    |                 |          |\n")
+	for i in range(2,len(npN)):
+		runtime_table.write(" %9d |        %6.2f      |     %7.2f     |   %4.2f   |\n" % (npN[i],npRuntimes[i],pRuntimes[i],pRuntimes[i]/npRuntimes[i])) 
 
 
+	runtime_table.close()
 
 
