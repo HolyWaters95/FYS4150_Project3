@@ -18,6 +18,7 @@ double test(double x){
 
 int main(){
 
+  //Decide if you want to save information or not (for easy quick-runs, or preserving old results)
   string save_runtimes;
   string save_results;
   cout << "do you want to save runtimes? y or n" << endl;
@@ -30,19 +31,25 @@ int main(){
   vector<int> X_values = readvalues("Pro3_Xvalues.txt");
   vec runtimes(N_values.size());
 
-
+  // Loop over all N and X values
   for (int g = 0;g < X_values.size(); g+=2){
   for (int h = 0;h < N_values.size(); h++){
 
+  // Setting up N, a and b, and initalize arrays
   int N = N_values[h];
   double a = X_values[g];
   double b = X_values[g+1];
   double *x = new double[N];
   double *w = new double[N];
 
+  // Start the clock
   time_t start, end;
   start = clock();
+
+  // Weights and int points for all coordinates
   gauleg(a,b,x,w,N);
+
+  // Perform sum over weights and function values
   double I = 0;
   for (int i=0; i<N;i++){
       for (int j=0; j<N;j++){
@@ -52,17 +59,21 @@ int main(){
                       for (int n=0; n<N;n++){
                           I += w[i]*w[j]*w[k]*w[l]*w[m]*w[n]*int_function(x[i],x[j],x[k],x[l],x[m],x[n]);
   }}}}}}
+
+  // Stop the clock
   end = clock();
 
   if (g==0){runtimes(h) = (double)(end-start)/CLOCKS_PER_SEC;}
 
-  //double I = Gaussian_Legendre(a,b,n,test);
+
+  // Print results to terminal
   cout << "---------------------------------" << endl;
   cout << "N = " << N << " | L = " << b << endl;
   cout << "I= " << I << endl;
   //cout << 5*M_PI*M_PI/(256) << endl;
   cout << "Runtime = " << (double)(end-start)/CLOCKS_PER_SEC << endl;
 
+  // Save results to file
   if (save_results == "y"){
       if(g == 0 and h == 0){
       string filenameresults = "Results_Legendre.txt";
@@ -84,6 +95,8 @@ int main(){
   } //End N loop
   } //End X loop
 
+
+  // Save runtimes to file
   if (save_runtimes == "y"){
   string filenameruntimes = "Gauss_Legendre_Runtimes.txt";
   ofstream output;

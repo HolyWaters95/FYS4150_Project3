@@ -33,6 +33,7 @@ vector<int> readvalues(string file){
     return N_values;
     }
 
+// Integrand function in spherical coordinates for Gaussian Laguerre
 double int_function_spherical(double r1,double r2,double t1,double t2,double p1,double p2){
     double A = r1*r1+r2*r2-2*r1*r2*(cos(t1)*cos(t2)+sin(t1)*sin(t2)*cos(p1-p2));
     if (A > pow(10,-10)){
@@ -42,6 +43,7 @@ double int_function_spherical(double r1,double r2,double t1,double t2,double p1,
     else{return 0;}
 }
 
+// Integrand function in cartesian coordinates for Gaussian Legendre
 double int_function(double x1,double y1,double z1, double x2, double y2, double z2){
     double r1 = sqrt(x1*x1 + y1*y1 + z1*z1);
     double r2 = sqrt(x2*x2 + y2*y2 + z2*z2);

@@ -12,7 +12,7 @@ using namespace arma;
 
 
 
-// function for brute forcing Monte Carlos
+// function for brute forcing Monte Carlo
 double func_brute(double x1, double y1,double z1, double x2, double y2, double z2){
     double alpha = 2.0;
     double r1 = sqrt(x1*x1 + y1*y1 + z1*z1);

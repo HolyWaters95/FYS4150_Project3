@@ -13,6 +13,8 @@ void gauss_laguerre(double *x, double *w, int n, double alf);
 
 int main(){
 
+
+  //Decide if you want to save information or not (for easy quick-runs, or preserving old results)
   string save_runtimes;
   string save_results;
   cout << "do you want to save runtimes? y or n" << endl;
@@ -21,14 +23,13 @@ int main(){
   cin >> save_results;
 
   vector<int> N_values = readvalues("Pro3_Nvalues.txt");
-  vector<int> X_values = readvalues("Pro3_Xvalues.txt");
   vec runtimes(N_values.size());
 
-
+  // Looping over all N-values in list
   for (int h = 0;h < N_values.size(); h++){
 
+  // Setting up N and initalize arrays
   int N = N_values[h];
-
 
   double *xr = new double[N+1];
   double *wr = new double[N+1];
@@ -39,16 +40,18 @@ int main(){
   double *xp = new double[N];
   double *wp = new double[N];
 
+  // Start the clock
   time_t start, end;
   start = clock();
 
-  //Array for Theta
+  // Weights and int points for Theta
   gauleg(0,M_PI,xt,wt,N);
-  //Array for Phi
+  // Weights and int points for Phi
   gauleg(0,2*M_PI,xp,wp,N);
-  //Array for radial part
+  // Weights and int points for radial part
   gauss_laguerre(xr,wr,N,0);
 
+  // Perform sum over weights and function values
   double I = 0;
   for (int i=1; i<N+1;i++){
       for (int j=1; j<N+1;j++){
@@ -58,11 +61,13 @@ int main(){
                       for (int n=0; n<N;n++){
                           I += wr[i]*wr[j]*wt[k]*wt[l]*wp[m]*wp[n]*int_function_spherical(xr[i],xr[j],xt[k],xt[l],xp[m],xp[n]);
   }}}}}}
+
+  // Stop the clock
   end = clock();
 
   runtimes(h) = (double)(end-start)/CLOCKS_PER_SEC;
 
-  //double I = Gaussian_Legendre(a,b,n,test);
+  // Printing Results to terminal
   cout << "-----------------------------" << endl;
   cout << "N = " << N << endl;
   cout << "I = " << I << endl;
@@ -70,6 +75,8 @@ int main(){
   //cout << 5*M_PI*M_PI/(256) << endl;
   cout << "-----------------------------" << endl;
 
+
+  // Saving results to file
   if (save_results == "y"){
       if(h == 0){
       //string filenameresults = "Results_Laguerre.txt";
@@ -92,6 +99,7 @@ int main(){
 
   } //End N loop
 
+  // Save runtimes to file
   if (save_runtimes == "y"){
   string filenameruntimes = "Gauss_Laguerre_Runtimes.txt";
   ofstream output;
@@ -105,6 +113,6 @@ int main(){
   }
   else{}
 
-  return 0;}
+  return 0;} // End of main
 
 
